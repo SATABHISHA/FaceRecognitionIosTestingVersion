@@ -38,7 +38,6 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
         //-----code to show the Avrrunning session in a view, ends
     }
     
-    
     func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,

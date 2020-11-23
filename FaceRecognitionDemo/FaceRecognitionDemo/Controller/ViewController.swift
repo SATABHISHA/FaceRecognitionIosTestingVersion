@@ -117,6 +117,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                            
                         let swiftyJsonVar=JSON(response.value ?? "")
                         print("responseData-=>",swiftyJsonVar)
+                        if(swiftyJsonVar["FaceMatches"][0]["Face"].exists()){
+                            let name = swiftyJsonVar["FaceMatches"][0]["Face"]["ExternalImageId"].stringValue
+                            print("name-=>",name)
+                            self.openDetailsPopup(name: "Hello \(name)")
+                        }else {
+                            self.openDetailsPopup(name: "Sorry! Couldn't recognize")
+                        }
                        /* if(swiftyJsonVar["images"].exists()){
                             let name = swiftyJsonVar["images"][0]["candidates"][0]["subject_id"].stringValue
                             print("name-=>",name)
@@ -258,7 +265,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if let firstResult = results.first{
                 print("confidence-=>",firstResult.confidence)
                 if(firstResult.confidence >= 0.6){
-                    self.openDetailsPopup(name: "It's \(firstResult.identifier)", confidence: "Confidence: \(firstResult.confidence)")
+                    self.openDetailsPopup(name: "It's \(firstResult.identifier)")
                 }
                 /*  if firstResult.identifier.contains("Manika Roy"){
                  self.titleName.text = "It's Manika"
@@ -288,7 +295,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 else{
                     print("4")
                     print("result-=>, Couldn't recognize")
-                    self.openDetailsPopup(name: "Sorry! couldn't recognize you", confidence: "Confidence: \(firstResult.confidence)")
+                    self.openDetailsPopup(name: "Sorry! couldn't recognize you")
                     
                 }
             }else{
@@ -297,7 +304,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 //                self.titleName.text = "Sorry couldn't recognize sorry!"
                 print("6")
                 print("result-=>, Couldn't recognize")
-                self.openDetailsPopup(name: "Sorry! couldn't recognize you", confidence: "Confidence: 0.0")
+                self.openDetailsPopup(name: "Sorry! couldn't recognize you")
             }
             
         }
@@ -323,7 +330,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var viewDetails: UIView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var confidencelabel: UILabel!
-    func openDetailsPopup(name:String?, confidence:String?){
+    func openDetailsPopup(name:String?){
         blurEffect()
         self.view.addSubview(viewDetails)
         let screenSize = UIScreen.main.bounds
