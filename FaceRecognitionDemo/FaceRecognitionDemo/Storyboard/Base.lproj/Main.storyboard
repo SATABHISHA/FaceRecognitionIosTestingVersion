@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RLV-IT-vzs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RLV-IT-vzs">
     <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -162,6 +162,9 @@
                     <navigationItem key="navigationItem" id="G9t-a6-WxA">
                         <barButtonItem key="backBarButtonItem" title="Back" id="fA1-NA-Kz2"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="viewCamera" destination="UMN-jv-Mzf" id="iE1-La-pxz"/>
+                    </connections>
                 </viewController>
                 <view contentMode="scaleToFill" id="lV2-tA-r4c">
                     <rect key="frame" x="0.0" y="0.0" width="311" height="148"/>
@@ -554,6 +557,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="ALW-lq-Tmb">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
         <designable name="BD5-8X-NUo">
             <size key="intrinsicContentSize" width="321" height="53"/>
         </designable>
@@ -565,6 +571,9 @@
         </designable>
         <designable name="pvQ-wy-WCz">
             <size key="intrinsicContentSize" width="175" height="53"/>
+        </designable>
+        <designable name="tCp-8t-lC8">
+            <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
     </designables>
     <resources>

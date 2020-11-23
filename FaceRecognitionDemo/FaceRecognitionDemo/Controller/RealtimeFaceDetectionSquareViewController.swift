@@ -10,8 +10,12 @@ import UIKit
 import AVFoundation
 import Vision
 import VideoToolbox
+import Alamofire
+import SwiftyJSON
 
 class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+    
+    @IBOutlet weak var viewCamera: UIView!
     private let captureSession = AVCaptureSession()
        private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
        private let videoDataOutput = AVCaptureVideoDataOutput()
@@ -26,6 +30,12 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
                 self.getCameraFrames()
                 self.captureSession.startRunning()
         // Do any additional setup after loading the view.
+        
+        //-----code to show the Avrrunning session in a view, starts
+        DispatchQueue.main.async {
+            self.previewLayer.frame = self.viewCamera!.bounds
+        }
+        //-----code to show the Avrrunning session in a view, ends
     }
     
 
@@ -53,9 +63,15 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
         }
         
         private func showCameraFeed() {
-            self.previewLayer.videoGravity = .resizeAspectFill
+          /*  self.previewLayer.videoGravity = .resizeAspectFill
             self.view.layer.addSublayer(self.previewLayer)
-            self.previewLayer.frame = self.view.frame
+            self.previewLayer.frame = self.view.frame */
+            
+            //----code to show realtime session in a view
+            self.previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+            self.previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+            self.viewCamera.layer.addSublayer(self.previewLayer)
+            self.previewLayer.frame = self.viewCamera.frame
         }
         
         private func getCameraFrames() {
@@ -85,14 +101,56 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
                         if let results = request.results as? [VNFaceObservation], results.count > 0 {
                             self.handleFaceDetectionResults(results)
                             print("did detect \(results.count) face(s)")
+                            self.loaderStart()
                             
                             //----convert cvpixel to base64, code starts
                             let image = UIImage(ciImage: CIImage(cvPixelBuffer: image))
                             var imageData = image.jpegData(compressionQuality: 0.2)
                                    let base64String = imageData?.base64EncodedString()
-                            print("base64convert-=>",base64String)
+//                            print("base64convert-=>",base64String)
                             self.captureSession.stopRunning()
                             //----convert cvpixel to base64, code ends
+                            
+                            //===============upload photo to the server code starts==========
+                           
+                            
+         //                   let api = "https://wrkplan-test.com/f/*ace-recognition/api/recognize"
+                     let api = "https://wrkplan-test.com/face-recognition/api/collection/face/recognize"
+                     
+                     let sentData: [String:Any] = [
+                         "CollectionId":"arb-usa",
+                         "ImageBase64":base64String,
+                     ]
+                            AF.request(api, method: .post, parameters: sentData, encoding: JSONEncoding.default, headers: nil).responseJSON{
+                                response in
+                                switch response.result{
+                                case .success:
+                                    self.loaderEnd()
+                                    
+                                 let swiftyJsonVar=JSON(response.value ?? "")
+                                 print("responseData-=>",swiftyJsonVar)
+                                /* if(swiftyJsonVar["images"].exists()){
+                                     let name = swiftyJsonVar["images"][0]["candidates"][0]["subject_id"].stringValue
+                                     print("name-=>",name)
+                                     self.openDetailsPopup(name: "Hello \(name)", confidence: name)
+                                 }else{
+         //                            print("Couldn't recognize")
+                                     self.openDetailsPopup(name: "Sorry! Couldn't recognize", confidence: "Sorry! Couldn't recognize")
+                                 } */
+                                  
+                                    
+         //                           self.profileImageView.image = pickedImage
+         //                           let message = "Added successfully!!";
+         //                           Toast(text: message, duration: Delay.short).show()
+                                    break
+
+                                case .failure(let error):
+                                    self.loaderEnd()
+                                    print("Error: ", error)
+                                }
+                            }
+                            //===============upload photo to the server code ends===========
+                            
                         } else {
                             self.clearDrawings()
                             print("did not detect any face")
@@ -163,5 +221,52 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
     
     //-------to convert uiimage, code starts
     
+    // ====================== Blur Effect Defiend START ================= \\
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var blurEffectView: UIVisualEffectView!
+    var loader: UIVisualEffectView!
+    func loaderStart() {
+        // ====================== Blur Effect START ================= \\
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        loader = UIVisualEffectView(effect: blurEffect)
+        loader.frame = view.bounds
+        loader.alpha = 1
+        view.addSubview(loader)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 10, width: 100, height: 100))
+        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 2)
+        activityIndicator.transform = transform
+        loadingIndicator.center = self.view.center;
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.white
+        loadingIndicator.startAnimating();
+        loader.contentView.addSubview(loadingIndicator)
+        
+        // screen roted and size resize automatic
+        loader.autoresizingMask = [.flexibleBottomMargin, .flexibleHeight, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleWidth];
+        
+        // ====================== Blur Effect END ================= \\
+    }
+    
+    func loaderEnd() {
+        self.loader.removeFromSuperview();
+    }
+    // ====================== Blur Effect Defiend END ================= \\
+    // ====================== Blur Effect function calling code starts ================= \\
+    func blurEffect() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.alpha = 0.7
+        view.addSubview(blurEffectView)
+        // screen roted and size resize automatic
+        blurEffectView.autoresizingMask = [.flexibleBottomMargin, .flexibleHeight, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleWidth];
+        
+    }
+    func canelBlurEffect() {
+        self.blurEffectView.removeFromSuperview();
+    }
+    
+    // ====================== Blur Effect function calling code ends ================= \\
 
 }
