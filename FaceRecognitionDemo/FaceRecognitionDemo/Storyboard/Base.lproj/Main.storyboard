@@ -13,11 +13,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FaceRecognitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfc-MS-EGM">
-                                <rect key="frame" x="25" y="75" width="784" height="852"/>
+                                <rect key="frame" x="25" y="25" width="654" height="785.5"/>
                                 <color key="backgroundColor" red="0.90188157560000004" green="0.90201145410000005" blue="0.9018532038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" systemColor="systemBlueColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -33,13 +33,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALW-lq-Tmb" customClass="DesignableButton" customModule="FaceRecognitionDemo" customModuleProvider="target">
-                                <rect key="frame" x="76" y="968" width="671" height="76"/>
+                                <rect key="frame" x="76" y="851.5" width="541" height="76"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cameranew" translatesAutoresizingMaskIntoConstraints="NO" id="I3h-vx-B6b">
                                         <rect key="frame" x="8" y="0.0" width="57" height="76"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Selfie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ItG-oh-xTn">
-                                        <rect key="frame" x="73" y="0.0" width="575" height="76"/>
+                                        <rect key="frame" x="73" y="0.0" width="445" height="76"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                         <color key="textColor" systemColor="scrollViewTexturedBackgroundColor"/>
                                         <nil key="highlightedColor"/>
@@ -142,11 +142,11 @@
             <objects>
                 <viewController id="H8I-lB-ELt" customClass="RealtimeFaceDetectionSquareViewController" customModule="FaceRecognitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bA8-8E-Oc4">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UMN-jv-Mzf">
-                                <rect key="frame" x="20" y="66" width="794" height="841"/>
+                                <rect key="frame" x="20" y="16" width="664" height="774.5"/>
                                 <color key="backgroundColor" systemColor="systemGray3Color"/>
                             </view>
                         </subviews>
@@ -163,22 +163,29 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="fA1-NA-Kz2"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="name" destination="exN-Gy-ZYE" id="qce-6o-SS0"/>
                         <outlet property="viewCamera" destination="UMN-jv-Mzf" id="iE1-La-pxz"/>
+                        <outlet property="viewDetails" destination="lV2-tA-r4c" id="1Ul-R3-zTQ"/>
+                        <segue destination="MRs-WJ-Ncb" kind="show" identifier="dashboard" id="keV-4S-z8P"/>
                     </connections>
                 </viewController>
                 <view contentMode="scaleToFill" id="lV2-tA-r4c">
                     <rect key="frame" x="0.0" y="0.0" width="311" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bn5-Er-bki">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bn5-Er-bki">
                             <rect key="frame" x="0.0" y="114" width="311" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.91477633250000001" green="0.91477633250000001" blue="0.91477633250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="34" id="xw9-rk-bR4"/>
+                            </constraints>
                             <state key="normal" title="OK"/>
+                            <connections>
+                                <action selector="btnPopupOk:" destination="H8I-lB-ELt" eventType="touchUpInside" id="6Md-xV-2re"/>
+                            </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exN-Gy-ZYE">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exN-Gy-ZYE">
                             <rect key="frame" x="47" y="40" width="217" height="36"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.4802109772" green="0.4802109772" blue="0.4802109772" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -186,6 +193,15 @@
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="HGH-BG-oOB"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Bn5-Er-bki" firstAttribute="leading" secondItem="HGH-BG-oOB" secondAttribute="leading" id="4bO-qa-tNg"/>
+                        <constraint firstItem="Bn5-Er-bki" firstAttribute="bottom" secondItem="HGH-BG-oOB" secondAttribute="bottom" id="7vg-B1-2SU"/>
+                        <constraint firstItem="exN-Gy-ZYE" firstAttribute="top" secondItem="HGH-BG-oOB" secondAttribute="top" constant="40" id="DSR-Kh-niE"/>
+                        <constraint firstItem="HGH-BG-oOB" firstAttribute="trailing" secondItem="exN-Gy-ZYE" secondAttribute="trailing" constant="47" id="IW5-y0-wPV"/>
+                        <constraint firstItem="Bn5-Er-bki" firstAttribute="trailing" secondItem="HGH-BG-oOB" secondAttribute="trailing" id="YB6-mq-6bu"/>
+                        <constraint firstItem="Bn5-Er-bki" firstAttribute="top" relation="lessThanOrEqual" secondItem="exN-Gy-ZYE" secondAttribute="bottom" constant="38" id="tw7-h9-64R"/>
+                        <constraint firstItem="exN-Gy-ZYE" firstAttribute="leading" secondItem="HGH-BG-oOB" secondAttribute="leading" constant="47" id="wQT-gN-WdW"/>
+                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" id="FCc-uQ-gMx">
                     <rect key="frame" x="0.0" y="0.0" width="292" height="280"/>
@@ -275,11 +291,11 @@
             <objects>
                 <viewController id="MRs-WJ-Ncb" customClass="DashboardViewController" customModule="FaceRecognitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="08J-6w-YNo">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfQ-Z6-zRo" customClass="DesignableButton" customModule="FaceRecognitionDemo" customModuleProvider="target">
-                                <rect key="frame" x="225" y="399" width="384" height="81"/>
+                                <rect key="frame" x="190" y="357" width="324" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <state key="normal" title="Detection By Selfie">
@@ -304,7 +320,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvQ-wy-WCz" customClass="DesignableButton" customModule="FaceRecognitionDemo" customModuleProvider="target">
-                                <rect key="frame" x="225" y="514" width="384" height="81"/>
+                                <rect key="frame" x="190" y="460" width="324" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <state key="normal" title="Enroll Name">
@@ -329,7 +345,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BD5-8X-NUo" customClass="DesignableButton" customModule="FaceRecognitionDemo" customModuleProvider="target">
-                                <rect key="frame" x="225" y="631" width="384" height="81"/>
+                                <rect key="frame" x="190" y="564" width="324" height="73"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                 <state key="normal" title="Detection By Realtime">
@@ -391,11 +407,11 @@
             <objects>
                 <viewController id="DDf-zm-D9m" customClass="EnrollNameViewController" customModule="FaceRecognitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uqB-zx-8XX">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMK-Jd-RiP">
-                                <rect key="frame" x="25" y="75" width="784" height="852"/>
+                                <rect key="frame" x="25" y="25" width="654" height="785.5"/>
                                 <color key="backgroundColor" red="0.90188157560000004" green="0.90201145410000005" blue="0.9018532038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" systemColor="systemBlueColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -411,13 +427,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCp-8t-lC8" customClass="DesignableButton" customModule="FaceRecognitionDemo" customModuleProvider="target">
-                                <rect key="frame" x="76" y="968" width="671" height="76"/>
+                                <rect key="frame" x="76" y="851.5" width="541" height="76"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cameranew" translatesAutoresizingMaskIntoConstraints="NO" id="wH5-88-v85">
                                         <rect key="frame" x="8" y="0.0" width="57" height="76"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take Selfie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m2U-2K-fxD">
-                                        <rect key="frame" x="73" y="0.0" width="575" height="76"/>
+                                        <rect key="frame" x="73" y="0.0" width="445" height="76"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                         <color key="textColor" systemColor="scrollViewTexturedBackgroundColor"/>
                                         <nil key="highlightedColor"/>
@@ -576,6 +592,10 @@
             <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
     </designables>
+    <inferredMetricsTieBreakers>
+        <segue reference="mfg-YB-pUz"/>
+        <segue reference="keV-4S-z8P"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="cameranew" width="512" height="512"/>
         <image name="crossred" width="16" height="16"/>
