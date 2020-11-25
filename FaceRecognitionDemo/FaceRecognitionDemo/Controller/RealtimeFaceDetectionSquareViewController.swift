@@ -95,9 +95,14 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
          })
          let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: image, orientation: .leftMirrored, options: [:])
          try? imageRequestHandler.perform([faceDetectionRequest])*/
+        var detect_count:Int = 0
         let faceDetectionRequest = VNDetectFaceLandmarksRequest(completionHandler: { (request: VNRequest, error: Error?) in
-            DispatchQueue.main.async {
-                if let results = request.results as? [VNFaceObservation], results.count > 0 {
+            DispatchQueue.main.sync {
+                parentif: if let results = request.results as? [VNFaceObservation], results.count > 0 {
+                    
+                    detect_count = detect_count + 1
+                    print("detectcount-=>",detect_count)
+//                    break parentif
                     self.handleFaceDetectionResults(results)
                     print("did detect \(results.count) face(s)")
                     self.captureSession.stopRunning()
@@ -105,8 +110,10 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
                     nestedif: if(results.count>1){
                         self.loaderEnd()
 //                        self.captureSession.stopRunning()
+                        DispatchQueue.main.async {
                         self.openDetailsPopup(name: "Multiple faces detected. Please try again.")
-                        break nestedif
+                        }
+//                        break nestedif
                     }else {
                        // break nestedif
                         self.loaderEnd()
@@ -122,6 +129,7 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
                         
                         
                         //                   let api = "https://wrkplan-test.com/f/*ace-recognition/api/recognize"
+                        
                         let api = "https://wrkplan-test.com/face-recognition/api/collection/face/recognize"
                         
                         let sentData: [String:Any] = [
@@ -140,11 +148,10 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
                                     let name = swiftyJsonVar["FaceMatches"][0]["Face"]["ExternalImageId"].stringValue
                                     print("name-=>",name)
                                     self.openDetailsPopup(name: "Hello \(name)")
-                                    
-                                    break nestedif1
+//                                    break nestedif1
                                 }else {
                                     self.openDetailsPopup(name: "Sorry! Couldn't recognize")
-                                    break nestedif1
+//                                    break nestedif1
                                 }
                                 break
                                 
@@ -179,7 +186,7 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
             let faceBoundingBoxShape = CAShapeLayer()
             faceBoundingBoxShape.path = faceBoundingBoxPath
             faceBoundingBoxShape.fillColor = UIColor.clear.cgColor
-            faceBoundingBoxShape.strokeColor = UIColor.green.cgColor
+            faceBoundingBoxShape.strokeColor = UIColor.white.cgColor
             var newDrawings = [CAShapeLayer]()
             newDrawings.append(faceBoundingBoxShape)
             if let landmarks = observedFace.landmarks {
@@ -197,14 +204,14 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
     
     private func drawFaceFeatures(_ landmarks: VNFaceLandmarks2D, screenBoundingBox: CGRect) -> [CAShapeLayer] {
         var faceFeaturesDrawings: [CAShapeLayer] = []
-        if let leftEye = landmarks.leftEye {
+        /*if let leftEye = landmarks.leftEye {
             let eyeDrawing = self.drawEye(leftEye, screenBoundingBox: screenBoundingBox)
             faceFeaturesDrawings.append(eyeDrawing)
         }
         if let rightEye = landmarks.rightEye {
             let eyeDrawing = self.drawEye(rightEye, screenBoundingBox: screenBoundingBox)
             faceFeaturesDrawings.append(eyeDrawing)
-        }
+        }*/
         // draw other face features here
         return faceFeaturesDrawings
     }
@@ -234,15 +241,15 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
     @IBAction func btnPopupOk(_ sender: Any) {
         closeDetailsPopup()
         self.performSegue(withIdentifier: "dashboard", sender: nil)
-     /*   DispatchQueue.main.async {
+       /* DispatchQueue.main.async {
             self.captureSession.startRunning()
-        } */
+        }*/
     }
     
     @IBOutlet var viewDetails: UIView!
     @IBOutlet weak var name: UILabel!
     func openDetailsPopup(name:String?){
-//        blurEffect()
+        blurEffect()
         self.view.addSubview(viewDetails)
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.height
@@ -267,10 +274,10 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
         UIView.animate(withDuration: 0.3, animations: {
             self.viewDetails.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.viewDetails.alpha = 0
-//            self.blurEffectView.alpha = 0.3
+            self.blurEffectView.alpha = 0.3
         }) { (success) in
             self.viewDetails.removeFromSuperview();
-//            self.canelBlurEffect()
+            self.canelBlurEffect()
         }
     }
     //===============FormDetails Popup code ends===================

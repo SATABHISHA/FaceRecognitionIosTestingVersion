@@ -175,6 +175,12 @@ class EnrollNameViewController: UIViewController, UIImagePickerControllerDelegat
                 
              let swiftyJsonVar=JSON(response.value ?? "")
              print("responseData-=>",swiftyJsonVar)
+                if(swiftyJsonVar["FaceId"].exists()){
+//                    self.showToast(message: "Employee's image enrolled successfully", font: .systemFont(ofSize: 12.0))
+                    self.openMessagePopup(message: "Employee's image enrolled successfully")
+                }else{
+                    self.openMessagePopup(message: "Sorry! Something went wrong. Image enrollment unsuccessful")
+                }
                 
           /*   if(swiftyJsonVar["images"].exists()){
                 self.openMessagePopup(message: "Employee's image enrolled successfully")
