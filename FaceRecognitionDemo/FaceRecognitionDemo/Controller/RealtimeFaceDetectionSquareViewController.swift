@@ -24,7 +24,7 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        super.viewDidLoad()
+//        super.viewDidLoad()
         self.addCameraInput()
         self.showCameraFeed()
         self.getCameraFrames()
@@ -71,6 +71,7 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
         self.previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
         self.viewCamera.layer.addSublayer(self.previewLayer)
         self.previewLayer.frame = self.viewCamera.frame
+        
     }
     
     private func getCameraFrames() {
@@ -329,5 +330,24 @@ class RealtimeFaceDetectionSquareViewController: UIViewController, AVCaptureVide
     }
     
     // ====================== Blur Effect function calling code ends ================= \\
+    
+    //-------function to draw rectangle
+    private func drawRectangle() {
+            
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: 0, y: 0))
+            path.addLine(to: CGPoint(x: 200, y: 0))
+            path.addLine(to: CGPoint(x: 200, y: 200))
+            path.addLine(to: CGPoint(x: 0, y: 200))
+            path.addLine(to: CGPoint(x: 0, y: 0))
+            
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = path.cgPath
+            shapeLayer.strokeColor = UIColor.black.cgColor
+            shapeLayer.fillColor = UIColor.orange.cgColor
+            shapeLayer.lineWidth = 3
+            
+        self.previewLayer.addSublayer(shapeLayer)
+        }
     
 }
